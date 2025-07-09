@@ -12,7 +12,6 @@ import { ThreeBgService } from '../three-bg.service';
 export class HeroComponent implements AfterViewInit {
   @ViewChild('bgCanvas', { static: true }) private bgCanvas!: ElementRef<HTMLCanvasElement>;
   
-  showOrientationButton = false;
   isMobile = false;
 
   constructor(private threeBgService: ThreeBgService) {
@@ -23,10 +22,12 @@ export class HeroComponent implements AfterViewInit {
     if (this.bgCanvas) {
       this.threeBgService.createScene(this.bgCanvas);
       this.threeBgService.animate();
-      
-      if (this.isMobile && typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
-        this.showOrientationButton = true;
-      }
+    }
+  }
+
+  async onHeroClick(): Promise<void> {
+    if (this.threeBgService.requiresPermission) {
+      await this.threeBgService.requestDeviceOrientationPermission();
     }
   }
 
@@ -35,13 +36,6 @@ export class HeroComponent implements AfterViewInit {
     const projectsSection = document.getElementById('projects');
     if (projectsSection) {
       projectsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  async enableDeviceMotion(): Promise<void> {
-    const granted = await this.threeBgService.requestDeviceOrientationPermission();
-    if (granted) {
-      this.showOrientationButton = false;
     }
   }
 }

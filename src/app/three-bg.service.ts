@@ -13,6 +13,9 @@ export class ThreeBgService {
   private mouse = new THREE.Vector2();
   private deviceOrientation = new THREE.Vector2();
   private isMobile = false;
+  private permissionRequested = false;
+  private needsPermission = false;
+  private readonly PERMISSION_STORAGE_KEY = 'device_orientation_permission_granted';
   private sizes = {
     width: window.innerWidth,
     height: window.innerHeight
@@ -20,6 +23,12 @@ export class ThreeBgService {
 
   constructor(private ngZone: NgZone) {
     this.isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    this.needsPermission = this.isMobile && typeof (DeviceOrientationEvent as any).requestPermission === 'function';
+    
+    // Verificar se a permissão já foi concedida anteriormente
+    if (this.needsPermission && this.isPermissionGranted()) {
+      this.permissionRequested = true;
+    }
   }
 
   public createScene(canvas: ElementRef<HTMLCanvasElement>): void {
@@ -115,15 +124,8 @@ export class ThreeBgService {
   }
 
   private setupMobileControls(): void {
-    if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
-      (DeviceOrientationEvent as any).requestPermission()
-        .then((response: string) => {
-          if (response === 'granted') {
-            this.addOrientationListeners();
-          }
-        })
-        .catch(console.error);
-    } else {
+    if (!this.needsPermission || this.isPermissionGranted()) {
+      // Para dispositivos Android ou que já têm permissão concedida
       this.addOrientationListeners();
     }
   }
@@ -162,6 +164,8 @@ export class ThreeBgService {
           .then((response: string) => {
             if (response === 'granted') {
               this.addOrientationListeners();
+              this.savePermissionGranted();
+              this.permissionRequested = true;
               resolve(true);
             } else {
               resolve(false);
@@ -173,5 +177,25 @@ export class ThreeBgService {
         resolve(true);
       }
     });
+  }
+
+  private isPermissionGranted(): boolean {
+    try {
+      return localStorage.getItem(this.PERMISSION_STORAGE_KEY) === 'true';
+    } catch {
+      return false;
+    }
+  }
+
+  private savePermissionGranted(): void {
+    try {
+      localStorage.setItem(this.PERMISSION_STORAGE_KEY, 'true');
+    } catch {
+      // Ignorar erro se localStorage não estiver disponível
+    }
+  }
+
+  public get requiresPermission(): boolean {
+    return this.needsPermission && !this.permissionRequested;
   }
 }

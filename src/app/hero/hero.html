@@ -1,4 +1,4 @@
-<section id="home" class="min-h-screen flex flex-col justify-center items-center text-center pt-28 pb-40 relative px-4 sm:px-6">
+<section id="home" class="min-h-screen flex flex-col justify-center items-center text-center pt-28 pb-40 relative px-4 sm:px-6" (click)="onHeroClick()">
     <!-- Container para o fundo 3D -->
     <div id="bg-3d-container">
         <canvas #bgCanvas id="bg-3d"></canvas>
@@ -14,13 +14,6 @@
             <a href="#projects" (click)="scrollToProjects($event)" class="inline-block px-8 py-3 border-2 border-indigo-400 text-indigo-400 rounded-md text-lg font-medium hover:bg-indigo-500 hover:text-white hover:border-indigo-500 transition-all duration-300">
                 Veja meus projetos!
             </a>
-        </div>
-        
-        <!-- Botão para habilitar movimento no dispositivo (apenas iOS) -->
-        <div *ngIf="showOrientationButton" class="mt-4 reveal relative z-20">
-            <button (click)="enableDeviceMotion()" class="inline-block px-6 py-2 border-2 border-indigo-300 text-indigo-300 rounded-md text-sm font-medium hover:bg-indigo-400 hover:text-white hover:border-indigo-400 transition-all duration-300 opacity-80 hover:opacity-100">
-                ◈ Habilitar movimento do dispositivo
-            </button>
         </div>
     </div>
 </section>
