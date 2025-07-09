@@ -1,0 +1,16 @@
+<section id="skills" class="py-20">
+    <div class="container mx-auto px-6">
+        <div class="reveal">
+            <h2 class="text-4xl font-bold text-center mb-2 text-gray-100">
+                <span class="text-gradient">02.</span> Habilidades
+            </h2>
+            <div class="w-24 h-1 bg-indigo-400 mx-auto mb-12"></div>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto reveal">
+            <div *ngFor="let skill of skills; trackBy: trackBySkill" class="bg-slate-800/50 p-6 rounded-lg flex flex-col items-center justify-center text-center hover:-translate-y-2 transition-transform duration-300">
+                <i class="text-5xl mb-2" [ngClass]="[skill.iconClass, skill.colorClass]"></i>
+                <p class="font-semibold text-gray-200">{{ skill.name }}</p>
+            </div>
+        </div>
+    </div>
+</section>

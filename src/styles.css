@@ -1,0 +1,68 @@
+/* Desabilitar diretivas Tailwind temporariamente - usando CDN */
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* Estilos customizados para aplicar a fonte Poppins */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #0a192f;
+    color: #cbd5e1;
+    scroll-behavior: smooth;
+}
+
+/* Efeito de gradiente no texto */
+.text-gradient {
+    background: linear-gradient(90deg, #4f46e5, #0ea5e9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Animação de entrada */
+.reveal {
+    position: relative;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: all 0.8s ease-in-out;
+}
+
+.reveal.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Container para objeto 3D */
+#bg-3d-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+#bg-3d {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Efeito de sobreposição de gradiente */
+#home::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10rem;
+    background: linear-gradient(to top, #0a192f, transparent);
+    z-index: 2;
+}
+
+/* Rolagem suave para toda a página */
+html {
+    scroll-behavior: smooth;
+}
+
+

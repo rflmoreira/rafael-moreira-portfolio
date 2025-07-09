@@ -1,0 +1,26 @@
+<section id="home" class="min-h-screen flex flex-col justify-center items-center text-center pt-28 pb-40 relative px-4 sm:px-6">
+    <!-- Container para o fundo 3D -->
+    <div id="bg-3d-container">
+        <canvas #bgCanvas id="bg-3d"></canvas>
+    </div>
+    <div class="max-w-2xl relative z-20 w-full">
+        <p class="text-indigo-400 text-lg mb-2 reveal">Olá, meu nome é</p>
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold text-gray-100 reveal">Rafael Moreira.</h1>
+        <h2 class="text-2xl sm:text-3xl md:text-6xl font-bold text-gray-400 mt-2 reveal">Desenvolvedor web e mobile em São Paulo, Brasil.</h2>
+        <p class="mt-6 text-base sm:text-lg reveal px-2 sm:px-0">
+            Sou um desenvolvedor full-stack que transforma código em experiências digitais modernas e de alto impacto. Não sigo tendências, eu as crio. Estou sempre pronto para enfrentar grandes ideias e construir algo extraordinário ao seu lado.
+        </p>
+        <div class="mt-8 reveal relative z-20">
+            <a href="#projects" (click)="scrollToProjects($event)" class="inline-block px-8 py-3 border-2 border-indigo-400 text-indigo-400 rounded-md text-lg font-medium hover:bg-indigo-500 hover:text-white hover:border-indigo-500 transition-all duration-300">
+                Veja meus projetos!
+            </a>
+        </div>
+        
+        <!-- Botão para habilitar movimento no dispositivo (apenas iOS) -->
+        <div *ngIf="showOrientationButton" class="mt-4 reveal relative z-20">
+            <button (click)="enableDeviceMotion()" class="inline-block px-6 py-2 border-2 border-indigo-300 text-indigo-300 rounded-md text-sm font-medium hover:bg-indigo-400 hover:text-white hover:border-indigo-400 transition-all duration-300 opacity-80 hover:opacity-100">
+                ◈ Habilitar movimento do dispositivo
+            </button>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,22 @@
+<app-header></app-header>
+
+<main class="relative z-10">
+  <app-hero></app-hero>
+  <app-about></app-about>
+  <app-skills></app-skills>
+  <app-formation></app-formation>
+  <app-certifications></app-certifications>
+  <app-projects></app-projects>
+  <app-contact></app-contact>
+</main>
+
+<app-footer></app-footer>
+
+@if (showBackToTop) {
+<a href="#" id="to-top-button" (click)="scrollToTop($event)"
+   class="fixed bottom-8 right-8 inline-flex items-center justify-center p-4 border-2 border-indigo-400 text-indigo-400 rounded-md text-lg font-medium hover:bg-indigo-500 hover:text-white hover:border-indigo-500 transition-all duration-300 z-50"
+   [class.hidden]="!showBackToTop"
+   aria-label="Voltar ao Topo">
+    <i class="fas fa-arrow-up"></i>
+</a>
+}
