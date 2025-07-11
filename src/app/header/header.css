@@ -1,0 +1,41 @@
+/* Player de música */
+#mini-player button:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+#mini-player .fa-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Loading caso o Font Awesome não carregue */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Mobile */
+@media (max-width: 320px) {
+    #mini-player {
+        margin-left: 0.5rem;
+    }
+    
+    #mini-player .hidden {
+        display: none !important;
+    }
+}
+
+/* Hover effects */
+#mini-player button:hover:not(:disabled) {
+    background-color: rgba(51, 65, 85, 0.7);
+    transform: scale(1.05);
+}
+
+#mini-player button:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+/* Transições */
+#mini-player button {
+    transition: all 0.2s ease-in-out;
+}

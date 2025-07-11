@@ -1,8 +1,33 @@
 <header id="header" class="fixed top-0 left-0 w-full z-50 transition-all duration-300">
     <div class="container mx-auto px-6">
         <nav class="w-full flex justify-between items-center py-4">
-            <a href="#" class="text-2xl font-bold text-white flex-shrink-0">RM<span class="text-indigo-400">.</span></a>
+            <!-- Logo e player -->
+            <div class="flex items-center flex-shrink-0">
+                <a href="#" class="text-2xl font-bold text-white">RM<span class="text-indigo-400">.</span></a>
+                
+                <!-- Player de música -->
+                <div id="mini-player" class="flex items-center space-x-3 ml-4 sm:ml-8">
+                    <button 
+                        (click)="togglePlayPause()" 
+                        class="text-white text-xl hover:text-indigo-400 transition-colors duration-300 w-10 h-10 flex items-center justify-center bg-slate-800/50 rounded-full"
+                        [disabled]="isLoading"
+                        aria-label="Play/Pause Lofi Music">
+                        <i 
+                            class="fas" 
+                            [class.fa-play]="!isPlaying && !isLoading"
+                            [class.fa-stop]="isPlaying && !isLoading"
+                            [class.fa-spinner]="isLoading"
+                            [class.fa-spin]="isLoading">
+                        </i>
+                    </button>
+                    <div class="hidden sm:block">
+                        <p class="font-semibold text-sm text-white leading-tight">Lofi Radio</p>
+                        <p class="text-xs text-gray-400 leading-tight">Hunter.fm</p>
+                    </div>
+                </div>
+            </div>
 
+            <!-- Menu navegação -->
             <div class="flex items-center space-x-3 sm:space-x-6">
                 <a href="#about" class="text-white hover:text-indigo-400 transition-colors duration-300 text-sm sm:text-base">Sobre</a>
                 <a href="#projects" class="text-white hover:text-indigo-400 transition-colors duration-300 text-sm sm:text-base">Projetos</a>
@@ -10,4 +35,19 @@
             </div>
         </nav>
     </div>
+
+    <!-- Stream de áudio -->
+    <audio 
+        #lofiStream
+        preload="none"
+        (play)="onAudioPlay()"
+        (pause)="onAudioPause()"
+        (loadstart)="onAudioLoadStart()"
+        (canplay)="onAudioCanPlay()"
+        (loadeddata)="onAudioCanPlay()"
+        (waiting)="onAudioLoadStart()"
+        (error)="onAudioError()">
+        <source src="https://live.hunter.fm/lofi_high" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
 </header>
