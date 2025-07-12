@@ -18,7 +18,17 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/favicon-96x96.png",
+              "src/favicon.svg",
+              "src/apple-touch-icon.png",
+              "src/site.webmanifest",
+              "src/web-app-manifest-192x192.png",
+              "src/web-app-manifest-512x512.png",
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
             ],
             "styles": [
               "src/styles.css"
