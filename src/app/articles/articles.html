@@ -154,17 +154,5 @@
       </div>
     </div>
 
-    <!-- Botão voltar ao topo (apenas para artigo) - FORA da div fullscreen -->
-    <a 
-      *ngIf="showBackToTopInArticle"
-      id="article-back-to-top"
-      href="#"
-      (click)="scrollToTopInArticle(); $event.preventDefault()"
-      class="fixed inline-flex items-center justify-center p-4 border-2 border-indigo-400 text-indigo-400 rounded-md text-lg font-medium hover:bg-indigo-500 hover:text-white hover:border-indigo-500 transition-all duration-300"
-      style="bottom: 2.5rem; right: 2.5rem; z-index: 99999 !important;"
-      aria-label="Voltar ao Topo do Artigo">
-      <i class="fas fa-arrow-up"></i>
-    </a>
-
   </div>
 </section>

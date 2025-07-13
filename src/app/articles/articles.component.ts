@@ -130,7 +130,6 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   ];
 
   selectedArticle: Article | null = null;
-  showBackToTopInArticle = false;
   private navigationSubscription: Subscription | undefined;
 
   constructor(private cdr: ChangeDetectorRef, private navigationService: NavigationService) {}
@@ -160,12 +159,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   }
 
   onArticleScroll(event: Event): void {
-    const element = event.target as HTMLElement;
-    if (element.scrollTop > 300) {
-      this.showBackToTopInArticle = true;
-    } else {
-      this.showBackToTopInArticle = false;
-    }
+    // Método mantido para compatibilidade, mas sem funcionalidade
   }
 
   selectArticle(article: Article): void {
@@ -174,15 +168,12 @@ export class ArticlesComponent implements OnInit, OnDestroy {
     this.hideGlobalBackToTop();
     // Previne scroll do body principal
     document.body.classList.add('article-open');
-    // Não mostra o botão imediatamente - deixa o scroll determinar
-    this.showBackToTopInArticle = false;
     // Força detecção de mudanças
     this.cdr.detectChanges();
   }
 
   goBack(): void {
     this.selectedArticle = null;
-    this.showBackToTopInArticle = false;
     // Restaura o scroll do body principal
     document.body.classList.remove('article-open');
     // Reexibe o botão global de voltar ao topo
@@ -215,13 +206,6 @@ export class ArticlesComponent implements OnInit, OnDestroy {
   onKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Escape' && this.selectedArticle) {
       this.goBack();
-    }
-  }
-
-  scrollToTopInArticle(): void {
-    const articleContainer = document.querySelector('.fullscreen-article');
-    if (articleContainer) {
-      articleContainer.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 
