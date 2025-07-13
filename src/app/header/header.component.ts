@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NavigationService } from '../navigation.service';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isPlaying = false;
   isLoading = false;
   userTriggeredPlay = false;
+
+  constructor(private navigationService: NavigationService) {}
 
   ngOnInit() {
     // Component initialization
@@ -83,5 +86,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isPlaying = false;
     this.userTriggeredPlay = false;
     console.error('Erro ao carregar stream de áudio');
+  }
+
+  navigateToSection(sectionId: string, event: Event) {
+    event.preventDefault();
+    this.navigationService.navigateToSection(sectionId);
   }
 }

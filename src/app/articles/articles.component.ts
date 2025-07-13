@@ -1,5 +1,7 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NavigationService } from '../navigation.service';
+import { Subscription } from 'rxjs';
 
 interface Article {
   id: number;
@@ -22,7 +24,7 @@ interface Article {
     '(document:keydown)': 'onKeyDown($event)'
   }
 })
-export class ArticlesComponent {
+export class ArticlesComponent implements OnInit, OnDestroy {
   articles: Article[] = [
 //     {
 //       id: 1,
@@ -129,8 +131,33 @@ export class ArticlesComponent {
 
   selectedArticle: Article | null = null;
   showBackToTopInArticle = false;
+  private navigationSubscription: Subscription | undefined;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private navigationService: NavigationService) {}
+
+  ngOnInit() {
+    this.navigationSubscription = this.navigationService.closeArticleAndNavigate$.subscribe(
+      (sectionId: string) => {
+        if (this.selectedArticle) {
+          // Fecha o artigo primeiro
+          this.goBack();
+          // Aguarda um pouco para garantir que o artigo foi fechado antes de navegar
+          setTimeout(() => {
+            this.scrollToSection(sectionId);
+          }, 150);
+        } else {
+          // Se não há artigo aberto, navega normalmente
+          this.scrollToSection(sectionId);
+        }
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    if (this.navigationSubscription) {
+      this.navigationSubscription.unsubscribe();
+    }
+  }
 
   onArticleScroll(event: Event): void {
     const element = event.target as HTMLElement;
@@ -211,6 +238,13 @@ export class ArticlesComponent {
     if (globalBackToTopButton) {
       globalBackToTopButton.style.display = '';
       globalBackToTopButton.style.visibility = 'visible';
+    }
+  }
+
+  private scrollToSection(sectionId: string): void {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
     }
   }
 }
