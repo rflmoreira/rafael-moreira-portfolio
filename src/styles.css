@@ -65,4 +65,14 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Prevenir scroll do body quando artigo está aberto */
+body.article-open {
+    overflow: hidden;
+    height: 100vh;
+}
+
+body.article-open * {
+    scroll-behavior: auto;
+}
+
 

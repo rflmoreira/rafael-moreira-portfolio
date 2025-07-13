@@ -43,4 +43,20 @@ export class ProjectsComponent {
   trackByProject(index: number, project: any): string {
     return project.title;
   }
+
+  getTagColor(tag: string): string {
+    const colors: { [key: string]: string } = {
+      'Angular': 'bg-red-400',      // Red (Catppuccin Frappé)
+      'TypeScript': 'bg-blue-400',  // Blue (Catppuccin Frappé)
+      'Java': 'bg-orange-400',      // Peach (Catppuccin Frappé)
+      'Spring Boot': 'bg-green-400', // Green (Catppuccin Frappé)
+      'Node.js': 'bg-green-300',    // Green lighter (Catppuccin Frappé)
+      'MySQL': 'bg-sky-400',        // Sky (Catppuccin Frappé)
+      'HTML5': 'bg-orange-300',     // Peach lighter (Catppuccin Frappé)
+      'CSS3': 'bg-blue-300',        // Sapphire (Catppuccin Frappé)
+      'JavaScript': 'bg-yellow-300', // Yellow (Catppuccin Frappé)
+      'Weather API': 'bg-teal-400'  // Teal (Catppuccin Frappé)
+    };
+    return colors[tag] || 'bg-gray-400';
+  }
 }

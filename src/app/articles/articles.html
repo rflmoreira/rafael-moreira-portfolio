@@ -1,0 +1,176 @@
+<section id="articles" class="py-20">
+  <div class="container mx-auto px-6">
+    
+    <!-- Lista de Artigos -->
+    <div *ngIf="!selectedArticle" class="fade-in">
+      <!-- Header da seção -->
+      <div class="reveal">
+        <h2 class="text-4xl font-bold text-center mb-2 text-gray-100">
+          <span class="text-gradient">07.</span> Blog & Insights
+        </h2>
+        <div class="w-24 h-1 bg-indigo-400 mx-auto mb-20"></div>
+      </div>
+
+      <!-- Lista de artigos estilo projetos -->
+      <div class="max-w-4xl mx-auto space-y-12">
+        <div 
+          *ngFor="let article of articles"
+          class="grid grid-cols-[auto,1fr] gap-x-6 p-4 rounded-lg hover:bg-slate-800/50 transition-colors duration-300 cursor-pointer"
+          (click)="selectArticle(article)">
+          
+          <div class="pt-1">
+            <i class="fas fa-file-alt text-3xl text-indigo-400"></i>
+          </div>
+          
+          <div>
+            <header class="flex justify-between items-start mb-2">
+              <h3 class="text-xl font-bold text-white hover:text-indigo-400 transition-colors duration-300">
+                {{ article.title }}
+              </h3>
+              <div class="flex items-center space-x-4 text-gray-400 text-sm">
+                <span class="flex items-center">
+                  <i class="fas fa-clock mr-1"></i>
+                  {{ article.readTime }}
+                </span>
+                <span>{{ article.date | date:'dd/MM/yyyy' }}</span>
+              </div>
+            </header>
+            
+            <p class="text-gray-400 mb-3">{{ article.excerpt }}</p>
+            
+            <footer class="flex items-center justify-between">
+              <div class="flex flex-wrap gap-2">
+                <span 
+                  *ngFor="let tag of article.tags"
+                  class="px-2 py-1 rounded text-xs font-medium text-white"
+                  [class]="getTagColor(tag)">
+                  {{ tag }}
+                </span>
+              </div>
+              
+              <button class="text-gray-400 hover:text-indigo-400 font-medium text-sm transition-colors duration-300">
+                Ler post →
+              </button>
+            </footer>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Visualização do artigo completo -->
+    <div *ngIf="selectedArticle" class="fullscreen-article" (scroll)="onArticleScroll($event)">
+      <div class="min-h-screen px-6 pt-24 pb-8">
+        <div class="max-w-4xl mx-auto">
+          <!-- Header do artigo -->
+          <header class="mb-8">
+            <!-- Este espaço foi intencionalmente simplificado - o título agora está no banner -->
+          </header>
+
+          <!-- Imagem de destaque -->
+          <div class="min-h-80 sm:h-64 md:h-96 lg:h-[28rem] bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl mb-8 relative overflow-hidden">
+            <!-- Banner/Imagem de fundo se existir -->
+            <img 
+              *ngIf="selectedArticle.image" 
+              [src]="selectedArticle.image" 
+              [alt]="selectedArticle.title"
+              class="absolute inset-0 w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+            <!-- Overlay com informações do artigo -->
+            <div class="absolute inset-0 flex flex-col justify-center sm:justify-end p-4 sm:p-6 md:p-8">
+              <!-- Conteúdo principal do banner -->
+              <div class="text-white max-w-4xl">
+                <!-- Meta informações -->
+                <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-200 mb-3 sm:mb-4">
+                  <span class="flex items-center bg-black/40 px-2 sm:px-3 py-1 rounded-full backdrop-blur-sm w-fit">
+                    <i class="fas fa-calendar mr-1 sm:mr-2"></i>
+                    {{ selectedArticle.date | date:'dd/MM/yyyy' }}
+                  </span>
+                  <span class="flex items-center bg-black/40 px-2 sm:px-3 py-1 rounded-full backdrop-blur-sm w-fit">
+                    <i class="fas fa-clock mr-1 sm:mr-2"></i>
+                    {{ selectedArticle.readTime }} de leitura
+                  </span>
+                </div>
+                
+                <!-- Título principal -->
+                <h1 class="text-xl sm:text-2xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4 leading-tight">
+                  <span class="bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent drop-shadow-2xl">
+                    {{ selectedArticle.title }}
+                  </span>
+                </h1>
+                
+                <!-- Excerpt/Descrição -->
+                <p class="text-sm sm:text-lg md:text-xl text-gray-200 leading-relaxed max-w-3xl">
+                  {{ selectedArticle.excerpt }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conteúdo do artigo -->
+          <article class="prose prose-lg prose-invert max-w-none">
+            <div [innerHTML]="selectedArticle.content" class="article-content"></div>
+          </article>
+
+          <!-- Tags do artigo -->
+          <div class="mt-8 flex justify-between items-center">
+            <div class="flex flex-wrap gap-2">
+              <span 
+                *ngFor="let tag of selectedArticle.tags"
+                class="px-2 py-1 rounded text-xs font-medium text-white"
+                [class]="getTagColor(tag)">
+                {{ tag }}
+              </span>
+            </div>
+            <a 
+              (click)="goBack(); $event.preventDefault()"
+              href="#"
+              class="text-gray-400 hover:text-indigo-400 font-medium text-sm transition-colors duration-300">
+              ← Voltar
+            </a>
+          </div>
+
+          <!-- Seção de ações -->
+          <div class="mt-12 pt-8 border-t border-slate-700">
+            <div class="flex items-center justify-between">
+              <p class="text-gray-400 text-sm">
+                Gostou do post? Compartilhe:
+              </p>
+              <div class="flex items-center space-x-4">
+                <a 
+                  href="#" 
+                  class="text-lg text-gray-400 hover:text-indigo-400 transition-colors duration-300"
+                  title="Compartilhar no Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a 
+                  href="#" 
+                  class="text-lg text-gray-400 hover:text-indigo-400 transition-colors duration-300"
+                  title="Compartilhar no LinkedIn">
+                  <i class="fab fa-linkedin"></i>
+                </a>
+                <a 
+                  href="#" 
+                  class="text-lg text-gray-400 hover:text-indigo-400 transition-colors duration-300"
+                  title="Copiar link">
+                  <i class="fas fa-link"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão voltar ao topo (apenas para artigo) - FORA da div fullscreen -->
+    <a 
+      *ngIf="showBackToTopInArticle"
+      id="article-back-to-top"
+      href="#"
+      (click)="scrollToTopInArticle(); $event.preventDefault()"
+      class="fixed inline-flex items-center justify-center p-4 border-2 border-indigo-400 text-indigo-400 rounded-md text-lg font-medium hover:bg-indigo-500 hover:text-white hover:border-indigo-500 transition-all duration-300"
+      style="bottom: 2.5rem; right: 2.5rem; z-index: 99999 !important;"
+      aria-label="Voltar ao Topo do Artigo">
+      <i class="fas fa-arrow-up"></i>
+    </a>
+
+  </div>
+</section>

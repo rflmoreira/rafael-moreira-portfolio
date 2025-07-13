@@ -7,6 +7,7 @@ import { SkillsComponent } from './skills/skills.component';
 import { FormationComponent } from './formation/formation.component';
 import { CertificationsComponent } from './certifications/certifications.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { ArticlesComponent } from './articles/articles.component';
 import { ContactComponent } from './contact/contact.component';
 import { FooterComponent } from './footer/footer.component';
 
@@ -22,6 +23,7 @@ import { FooterComponent } from './footer/footer.component';
     FormationComponent,
     CertificationsComponent,
     ProjectsComponent,
+    ArticlesComponent,
     ContactComponent,
     FooterComponent
   ],
