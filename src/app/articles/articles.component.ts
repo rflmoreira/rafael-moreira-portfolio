@@ -170,19 +170,19 @@ export class ArticlesComponent {
 
   getTagColor(tag: string): string {
     const colors: { [key: string]: string } = {
-      'Angular': 'catppuccin-red',        // Red #e78284
-      'TypeScript': 'catppuccin-blue',    // Blue #8caaee
-      'Frontend': 'catppuccin-green',     // Green #a6d189
-      'CSS': 'catppuccin-mauve',          // Mauve #ca9ee6
-      'Layout': 'catppuccin-yellow',      // Yellow #e5c890
-      'Programming': 'catppuccin-lavender', // Lavender #babbf1
-      'Types': 'catppuccin-pink',         // Pink #f4b8e4
-      'linux': 'catppuccin-peach',       // Peach #ef9f76
-      'estatísticas': 'catppuccin-teal',  // Teal #81c8be
-      'mercado': 'catppuccin-sky',        // Sky #99d1db
-      'sistemas operacionais': 'catppuccin-surface2' // Surface2 #626880
+      'Angular': 'bg-red-400',        // Red
+      'TypeScript': 'bg-blue-400',    // Blue
+      'Frontend': 'bg-green-400',     // Green
+      'CSS': 'bg-purple-400',         // Purple
+      'Layout': 'bg-yellow-300',      // Yellow
+      'Programming': 'bg-indigo-400', // Indigo
+      'Types': 'bg-pink-400',         // Pink
+      'linux': 'bg-orange-400',       // Orange
+      'estatísticas': 'bg-teal-400',  // Teal
+      'mercado': 'bg-sky-400',        // Sky
+      'sistemas operacionais': 'bg-slate-400' // Slate
     };
-    return colors[tag] || 'catppuccin-overlay0';
+    return colors[tag] || 'bg-gray-400';
   }
 
   onKeyDown(event: KeyboardEvent): void {
